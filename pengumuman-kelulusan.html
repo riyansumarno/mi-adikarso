@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengumuman Kelulusan MIS ADIKARSO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --nu-green: #008141;
+            --nu-green-dark: #006332;
+        }
+        body {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-top: 5px solid var(--nu-green);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .btn-nu {
+            background-color: var(--nu-green);
+            transition: all 0.3s ease;
+        }
+        .btn-nu:hover {
+            background-color: var(--nu-green-dark);
+            transform: translateY(-1px);
+        }
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            z-index: 9999;
+        }
+        .modal-content {
+            background: #fff;
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 1rem;
+            animation: slideUp 0.4s ease-out;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media print {
+            body * { visibility: hidden; }
+            #printArea, #printArea * { visibility: visible; }
+            #printArea { position: absolute; left: 0; top: 0; width: 100%; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body class="p-4">
+
+    <div class="w-full max-w-md login-card rounded-2xl p-8 no-print">
+        <div class="flex justify-center mb-4">
+            <img src="https://raw.githubusercontent.com/riyansumarno/aset-mi-adikarso/refs/heads/main/LP_Maarif_NU.jpg" alt="Logo LP Maarif" class="h-24 w-auto">
+        </div>
+        
+        <h1 class="text-2xl font-bold text-center text-gray-800">PENGUMUMAN KELULUSAN</h1>
+        <p class="text-center text-gray-600 mb-6">MIS ADIKARSO TP. 2025/2026</p>
+
+        <div id="error-msg" class="hidden mb-4 p-3 bg-red-100 border-l-4 border-red-500 text-red-700 text-sm"></div>
+
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">NISN Peserta</label>
+                <input id="nisn" type="text" placeholder="Masukkan NISN" 
+                    class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:outline-none text-black">
+            </div>
+            
+            <div class="relative">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal Lahir</label>
+                <input id="pw" type="password" placeholder="Contoh: 30052014" 
+                    class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:outline-none text-black">
+                <button type="button" onclick="togglePassword()" class="absolute right-3 bottom-3 text-gray-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                </button>
+            </div>
+
+            <button onclick="login()" class="w-full btn-nu text-white font-bold py-3 rounded-lg shadow-lg mt-2">
+                Lihat Hasil
+            </button>
+            
+            <button onclick="toggleHelp()" class="w-full text-green-700 text-sm font-medium hover:underline mt-2">
+                Cara Penggunaan
+            </button>
+        </div>
+
+        <p class="text-center text-xs text-gray-400 mt-8">© <script>document.write(new Date().getFullYear())</script> MIS Adikarso • LP Ma'arif NU • Giting Creative</p>
+    </div>
+
+    <div id="hasil" class="hidden modal">
+        <div class="modal-content shadow-2xl">
+            <div class="p-4 bg-gray-50 border-b flex justify-between items-center no-print">
+                <span class="font-bold text-green-800 uppercase tracking-wide">Surat Keterangan Lulus</span>
+                <div class="flex gap-2">
+                    <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm transition">Cetak</button>
+                    <button onclick="closeModal()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md text-sm transition">Tutup</button>
+                </div>
+            </div>
+
+            <div id="printArea" class="p-8 md:p-12 bg-white text-black leading-relaxed">
+                <div class="flex items-center border-b-4 border-black pb-4 mb-6">
+                    <img src="https://raw.githubusercontent.com/riyansumarno/aset-mi-adikarso/refs/heads/main/LP_Maarif_NU.jpg" class="h-20 w-auto mr-4">
+                    <div class="text-center flex-grow">
+                        <h3 class="font-bold text-sm">LEMBAGA PENDIDIKAN MA’ARIF NU CABANG KEBUMEN</h3>
+                        <h1 class="font-bold text-xl md:text-2xl">MADRASAH IBTIDAIYAH (MI) ADIKARSO</h1>
+                        <p class="text-xs italic font-bold">STATUS: TERAKREDITASI A</p>
+                        <p class="text-[10px]">Alamat: Desa Adikarso, Kec. Kebumen, Kab. Kebumen, Jawa Tengah, 54351</p>
+						<p class="text-[10px]">HP: 087871584844, Email: mimaadikarso@gmail.com</p>
+                    </div>
+                </div>
+
+                <div class="text-center mb-8">
+                    <h2 class="font-bold text-lg underline decoration-1">SURAT KETERANGAN LULUS</h2>
+                    <p class="text-sm">Nomor: <span id="nomorSurat"></span></p>
+                </div>
+
+                <p class="mb-6">Berdasarkan hasil rapat dewan guru MIS ADIKARSO Tahun Pelajaran 2025/2026, dengan ini menerangkan bahwa:</p>
+
+                <div class="grid grid-cols-1 gap-2 mb-8">
+                    <div class="flex border-b border-gray-100 py-1">
+                        <span class="w-60">Nama Lengkap</span>
+                        <span class="flex-grow">: <span id="namaCetak" class="uppercase"></span></span>
+                    </div>
+                    <div class="flex border-b border-gray-100 py-1">
+                        <span class="w-60">Tempat, Tanggal Lahir</span>
+                        <span class="flex-grow">: <span id="ttlCetak"></span></span>
+                    </div>
+                    <div class="flex border-b border-gray-100 py-1">
+                        <span class="w-60">NISN</span>
+                        <span class="flex-grow">: <span id="nisnCetak"></span></span>
+                    </div>
+                </div>
+
+                <div class="text-center my-10">
+                    <p class="font-bold mb-2">DINYATAKAN:</p>
+                    <div id="statusCetak" class="inline-block px-12 py-3 border-4 border-black font-black text-3xl rounded-xl"></div>
+                </div>
+
+                <p class="text-justify mb-10">
+				Peserta didik tersebut telah menyelesaikan seluruh program pembelajaran dan memenuhi persyaratan kelulusan sesuai ketentuan yang berlaku.
+				<br>
+				Demikian keterangan ini diberikan agar dapat dipergunakan sebagaimana mestinya.
+				</p>
+
+                <div class="flex justify-end">
+    <div class="text-center w-64">
+        <p>Kebumen, 2 Juni 2026</p>
+        <p>Kepala Madrasah,</p>
+        
+        <div class="flex justify-center items-center my-2">
+            <img src="https://raw.githubusercontent.com/riyansumarno/aset-mi-adikarso/refs/heads/main/Iswahyuningsih_e-Sign.png" 
+                 alt="Iswahyuningsih e-Sign" 
+                 class="h-28 w-auto object-contain"> 
+        </div>
+        
+        <p class="font-bold underline">Iswahyuningsih, S.Pd.I.</p>
+        <p class="text-sm text-gray-600">NPK. 8826100090067</p>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="helpModal" class="hidden modal">
+        <div class="modal-content max-w-md p-6">
+            <h3 class="text-xl font-bold text-green-800 mb-4">Cara Penggunaan</h3>
+            <ul class="list-decimal list-inside space-y-3 text-gray-700 text-sm">
+                <li>Siapkan nomor <b>NISN</b> resmi Anda (10 digit).</li>
+                <li>Masukkan tanggal lahir sebagai kata sandi tanpa spasi atau tanda hubung (DDMMYYYY).
+                    <br><i class="text-xs text-gray-500">Contoh: Lahir 14 Mei 2014 ditulis <b>14052014</b></i>
+                </li>
+                <li>Klik tombol <b>"Lihat Hasil"</b> atau tekan tombol <b>Enter</b> pada keyboard.</li>
+                <li>Jika data benar, pop-up hasil kelulusan akan muncul secara otomatis.</li>
+                <li>Gunakan tombol <b>Cetak</b> jika ingin menyimpan dalam bentuk PDF atau print fisik dengan format kertas A4/Kuarto.</li>
+            </ul>
+            <button onclick="toggleHelp()" class="w-full mt-6 bg-gray-800 text-white py-2 rounded-lg">Saya Mengerti</button>
+        </div>
+    </div>
+
+    <script>
+        // Data Mahasiswa - Tanggal Lahir diperbaiki sesuai format DDMMYYYY
+        const students = [
+            {nama:"ADINDA TRI AMELIA", nisn:"0142207607", tempat:"Kebumen", ttl:"05092014", ket:"LULUS"},
+            {nama:"AHMAD IKLIILUDDIIN", nisn:"0136596454", tempat:"Kebumen", ttl:"12032013", ket:"LULUS"},
+            {nama:"AKHMAD FATHUR ROHMAN", nisn:"0143688767", tempat:"Kebumen", ttl:"02092014", ket:"LULUS"},
+            {nama:"ALISIA PRAMESTI ZAHRANI PUTRI", nisn:"3132767925", tempat:"Kebumen", ttl:"17062013", ket:"LULUS"},
+            {nama:"AR'RAYSHA ARGHI SHAYMONA", nisn:"0131573177", tempat:"Kebumen", ttl:"10112013", ket:"LULUS"},
+            {nama:"DINDA HAPSARI", nisn:"0141187827", tempat:"Kebumen", ttl:"06112014", ket:"LULUS"},
+            {nama:"FATIN KHOIRUNNISA", nisn:"0142799882", tempat:"Kebumen", ttl:"30052014", ket:"LULUS"},
+            {nama:"GHAZIYA PUTRI NATHIFA", nisn:"0142556149", tempat:"Tangerang", ttl:"12062014", ket:"LULUS"},
+            {nama:"HASNA AMELIYA FARRAS WATI", nisn:"3133508790", tempat:"Kebumen", ttl:"21072013", ket:"LULUS"},
+            {nama:"HASNA DIYANA HAMIDAH", nisn:"0138416853", tempat:"Kebumen", ttl:"18102013", ket:"LULUS"},
+            {nama:"HASNA UMY MAHFUDOH", nisn:"0132288255", tempat:"Kebumen", ttl:"30092013", ket:"LULUS"},
+            {nama:"JIDAN NABIL ADIYATMA", nisn:"0131539999", tempat:"Kebumen", ttl:"15062013", ket:"LULUS"},
+            {nama:"JIHAN MUTHIA NAILA", nisn:"3132614997", tempat:"Kebumen", ttl:"01052013", ket:"LULUS"},
+            {nama:"KALINGGA MURDANING AKRAMI", nisn:"0135990316", tempat:"Kebumen", ttl:"15062013", ket:"LULUS"},
+            {nama:"MUHAMAD DHOFRI KAMALI", nisn:"3134154058", tempat:"Jakarta", ttl:"07032013", ket:"LULUS"},
+            {nama:"MUHAMAD RIFQI MAULANA", nisn:"0141116979", tempat:"Kebumen", ttl:"06032014", ket:"LULUS"},
+            {nama:"MUHAMMAD FADHIL MUZAKI", nisn:"3145353811", tempat:"Banyumas", ttl:"30052014", ket:"LULUS"},
+            {nama:"MUHAMMAD FARREL SETYA RAMADHANI", nisn:"3131080748", tempat:"Kebumen", ttl:"30072013", ket:"LULUS"},
+            {nama:"MUHAMMAD KAFA RAMADHAN", nisn:"0141435276", tempat:"Kebumen", ttl:"25072014", ket:"LULUS"},
+            {nama:"MUKHAMAD RAFA", nisn:"3120763254", tempat:"Kebumen", ttl:"04122012", ket:"LULUS"},
+            {nama:"NUR LAELATUL FAJRIAH", nisn:"3137767091", tempat:"Banjarnegara", ttl:"03072013", ket:"LULUS"},
+            {nama:"WULAN SUCI RAMADHAN", nisn:"3138392336", tempat:"Kebumen", ttl:"07082013", ket:"LULUS"},
+            {nama:"YAOMY FARDANA", nisn:"0134717575", tempat:"Kebumen", ttl:"13072013", ket:"LULUS"},
+            {nama:"ADELIA RAHMAWATI", nisn:"0115774289", tempat:"Kebumen", ttl:"24012014", ket:"LULUS"},
+            {nama:"ADINDA AULIA PUTRI", nisn:"0114315385", tempat:"Kebumen", ttl:"07032014", ket:"LULUS"},
+            {nama:"AGNES RIYANI FATIMAH AZZAHRA", nisn:"0118777584", tempat:"Kebumen", ttl:"19062014", ket:"LULUS"},
+            {nama:"ALFIA DIANING ZULFAH RAHMADHANI", nisn:"0112502295", tempat:"Kebumen", ttl:"10072014", ket:"LULUS"},
+            {nama:"ALIFA AQILA ZAHRA", nisn:"3124599304", tempat:"Kebumen", ttl:"04102013", ket:"LULUS"},
+            {nama:"AMRI ADIL DERMAWAN", nisn:"3124643905", tempat:"Kebumen", ttl:"23052014", ket:"LULUS"},
+            {nama:"ANDIKA KASYA PRANULI", nisn:"3128267073", tempat:"Kebumen", ttl:"23022014", ket:"LULUS"},
+            {nama:"AYDUHA HUWAIDA", nisn:"3128779281", tempat:"Kebumen", ttl:"20042014", ket:"LULUS"},
+            {nama:"FAAIZAH RISKY IRFANIA", nisn:"0117820055", tempat:"Kebumen", ttl:"24032014", ket:"LULUS"},
+            {nama:"GIYAN RADITYA ARDANI", nisn:"0094420524", tempat:"Kebumen", ttl:"13032014", ket:"LULUS"},
+            {nama:"LIA RAHMAWATI", nisn:"0111288474", tempat:"Kebumen", ttl:"06062012", ket:"LULUS"},
+            {nama:"LUBADAH MABRUROH", nisn:"0111288474", tempat:"Kebumen", ttl:"28012013", ket:"LULUS"},
+            {nama:"MAULINA NUR HIDAYAH", nisn:"3121384003", tempat:"Cilacap", ttl:"18012014", ket:"LULUS"},
+            {nama:"MOHAMAD RASYA ZAENURI", nisn:"3117108843", tempat:"Kebumen", ttl:"16102013", ket:"LULUS"},
+            {nama:"MUDRIK KAMALA", nisn:"0127893512", tempat:"Kebumen", ttl:"28122013", ket:"LULUS"},
+            {nama:"MUFTIKHATUL LAILA", nisn:"3112216099", tempat:"Kebumen", ttl:"13102014", ket:"LULUS"},
+            {nama:"MUSA IKHSANUDIN MUBAROK", nisn:"3132461318", tempat:"Kebumen", ttl:"28122013", ket:"LULUS"},
+            {nama:"NAILA SOFIA", nisn:"3113304523", tempat:"Kebumen", ttl:"04052014", ket:"LULUS"},
+            {nama:"QAILA ADELIA PUTRI", nisn:"3118237400", tempat:"Kebumen", ttl:"28032014", ket:"LULUS"},
+            {nama:"RAJASWA ARKA NUFAIL", nisn:"3113334301", tempat:"Kebumen", ttl:"04112013", ket:"LULUS"},
+            {nama:"RESQI NURWAHID", nisn:"3137631846", tempat:"Kebumen", ttl:"28112013", ket:"LULUS"},
+            {nama:"VICKY NABILA AZZAHRA", nisn:"0135885451", tempat:"Kebumen", ttl:"20052013", ket:"LULUS"}
+        ];
+
+        // Listener untuk tombol Enter
+        document.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                login();
+            }
+        });
+
+        function togglePassword() {
+            const pw = document.getElementById('pw');
+            pw.type = pw.type === 'password' ? 'text' : 'password';
+        }
+
+        function toggleHelp() {
+            const help = document.getElementById('helpModal');
+            help.classList.toggle('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('hasil').classList.add('hidden');
+        }
+
+        function login() {
+            const n = document.getElementById('nisn').value.trim();
+            const p = document.getElementById('pw').value.trim();
+            const errorDiv = document.getElementById('error-msg');
+            
+            errorDiv.classList.add('hidden');
+
+            if(!n || !p) {
+                errorDiv.innerText = "Silakan isi NISN dan Tanggal Lahir!";
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            const s = students.find(x => x.nisn === n && x.ttl === p);
+
+            if (!s) {
+                errorDiv.innerText = "Data tidak ditemukan. Pastikan NISN dan format tanggal lahir (DDMMYYYY) benar.";
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            // --- BAGIAN YANG DIPERBAIKI ---
+    // Mencari indeks siswa untuk menentukan urutan nomor (0, 1, 2, dst)
+    const urutanSiswa = students.findIndex(x => x.nisn === n);
+    
+    // Angka awal 198 ditambah urutan siswa
+    const nomorUrut = 198 + urutanSiswa;
+    
+    // Format nomor surat sesuai permintaan
+    const noSurat = `${nomorUrut}/MI.059/Kur.02/06/2026`;
+    // ------------------------------
+
+    document.getElementById('nomorSurat').innerText = noSurat;
+            document.getElementById('namaCetak').innerText = s.nama;
+            document.getElementById('nisnCetak').innerText = s.nisn;
+            document.getElementById('ttlCetak').innerText = `${s.tempat}, ${formatTgl(s.ttl)}`;
+            document.getElementById('statusCetak').innerText = s.ket;
+
+            document.getElementById('hasil').classList.remove('hidden');
+        }
+
+        function formatTgl(str) {
+            const hari = str.substring(0, 2);
+            const bulanArr = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            const bulan = bulanArr[parseInt(str.substring(2, 4)) - 1];
+            const tahun = str.substring(4);
+            return `${hari} ${bulan} ${tahun}`;
+        }
+    </script>
+</body>
+</html>
