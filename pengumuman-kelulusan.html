@@ -78,67 +78,64 @@
             print-color-adjust: exact !important;
         }
         
+        /* ATURAN CETAK BARU UNTUK A4 DAN KUARTO */
         @media print {
-    @page {
-        size: A4 portrait;
-        margin: 0; /* Menghilangkan margin browser agar tidak ada pergeseran */
-    }
-    
-    html, body {
-        height: 100%;
-        margin: 0 !important;
-        padding: 0 !important;
-        background: #fff !important;
-        overflow: visible !important;
-    }
+            @page {
+                size: portrait; /* Membiarkan browser menentukan ukuran dasar */
+                margin: 0; /* Menghilangkan margin bawaan browser pembawa halaman kosong */
+            }
+            
+            html, body {
+                background: #ffffff !important;
+                height: auto !important;
+                overflow: visible !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
 
-    /* Menyembunyikan semua elemen kecuali area print */
-    body * {
-        visibility: hidden !important;
-    }
+            /* Sembunyikan semua elemen di luar area surat secara mutlak */
+            body * {
+                visibility: hidden !important;
+            }
 
-    /* Memaksa kontainer modal agar tidak memakan ruang */
-    .modal, .modal-content {
-        position: absolute !important;
-        left: 0 !important;
-        top: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        width: 100% !important;
-        max-height: none !important;
-        box-shadow: none !important;
-        overflow: visible !important;
-        visibility: hidden !important; /* Disembunyikan dulu, nanti isinya ditampilkan */
-    }
+            .modal, .modal-content {
+                position: relative !important;
+                display: block !important;
+                background: #ffffff !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                max-height: none !important;
+                overflow: visible !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                width: 100% !important;
+            }
 
-    #printArea, #printArea * {
-        visibility: visible !important;
-    }
+            /* Menampilkan area surat */
+            #printArea, #printArea * {
+                visibility: visible !important;
+            }
 
-    #printArea {
-        position: absolute !important;
-        left: 0 !important;
-        top: 0 !important;
-        width: 210mm; /* Standar lebar A4 */
-        min-height: 297mm; /* Standar tinggi A4 */
-        padding: 15mm !important; /* Padding internal surat */
-        margin: 0 !important;
-        box-sizing: border-box;
-        background: white !important;
-        page-break-after: avoid; /* Mencegah halaman tambahan setelahnya */
-        page-break-before: avoid;
-    }
+            #printArea {
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                height: auto !important; /* Dinamis agar muat di Kuarto yang lebih pendek */
+                padding: 10mm 12mm !important; /* Sedikit dipadatkan */
+                margin: 0 !important;
+                box-sizing: border-box;
+                background: #ffffff !important;
+                page-break-inside: avoid !important; /* Melarang pemotongan di tengah surat */
+                page-break-after: avoid !important;  /* Mencegah halaman kosong di akhir */
+            }
 
-    .no-print {
-        display: none !important;
-    }
-
-    /* Menghilangkan elemen kosong yang sering muncul di akhir */
-    footer, .watermark-text + div {
-        display: none !important;
-    }
-		}
-</style>
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
 </head>
 <body class="p-4">
 
