@@ -54,11 +54,70 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        
+        /* Gaya Watermark di Layar */
+        .watermark-container {
+            position: relative;
+            overflow: hidden;
+        }
+        .watermark-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            font-size: 5rem;
+            font-weight: 900;
+            color: rgba(0, 0, 0, 0.03);
+            white-space: nowrap;
+            pointer-events: none;
+            user-select: none;
+            z-index: 0;
+        }
+        
+        /* Optimasi Cetak Putih Bersih */
         @media print {
-            body * { visibility: hidden; }
-            #printArea, #printArea * { visibility: visible; }
-            #printArea { position: absolute; left: 0; top: 0; width: 100%; }
-            .no-print { display: none !important; }
+            @page {
+                size: A4;
+                margin: 15mm;
+            }
+            body {
+                background: #ffffff !important;
+                background-color: #ffffff !important;
+                color: #000000 !important;
+            }
+            body * { 
+                visibility: hidden; 
+            }
+            #printArea, #printArea * { 
+                visibility: visible; 
+            }
+            #printArea { 
+                position: absolute; 
+                left: 0; 
+                top: 0; 
+                width: 100%; 
+                background: #ffffff !important;
+                background-color: #ffffff !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .no-print { 
+                display: none !important; 
+            }
+            /* Menghilangkan sisa warna komponen luar saat dicetak */
+            .modal, .modal-content {
+                background: transparent !important;
+                background-color: transparent !important;
+                box-shadow: none !important;
+                overflow: visible !important;
+            }
+            /* Menjaga teks bayangan tetap tipis saat diprint */
+            .watermark-text {
+                color: rgba(0, 0, 0, 0.03) !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
         }
     </style>
 </head>
@@ -115,64 +174,69 @@
                 </div>
             </div>
 
-            <div id="printArea" class="p-8 md:p-12 bg-white text-black leading-relaxed">
-                <div class="flex items-center border-b-4 border-black pb-4 mb-6">
+            <!-- Print Area dengan Watermark -->
+            <div id="printArea" class="p-8 md:p-12 bg-white text-black leading-relaxed watermark-container">
+                
+                <!-- Teks Watermark Latar Belakang -->
+                <div class="watermark-text">MI ADIKARSO</div>
+
+                <div class="flex items-center border-b-4 border-black pb-4 mb-6 relative z-10">
                     <img src="https://raw.githubusercontent.com/riyansumarno/mi-adikarso/refs/heads/main/aset/LP_Maarif_NU.jpg" class="h-20 w-auto mr-4">
                     <div class="text-center flex-grow">
                         <h3 class="font-bold text-sm">LEMBAGA PENDIDIKAN MA’ARIF NU CABANG KEBUMEN</h3>
                         <h1 class="font-bold text-xl md:text-2xl">MADRASAH IBTIDAIYAH (MI) ADIKARSO</h1>
                         <p class="text-xs italic font-bold">STATUS: TERAKREDITASI A</p>
                         <p class="text-[10px]">Alamat: Desa Adikarso, Kec. Kebumen, Kab. Kebumen, Jawa Tengah, 54351</p>
-						<p class="text-[10px]">HP: 087871584844, Email: mimaadikarso@gmail.com</p>
+                        <p class="text-[10px]">HP: 087871584844, Email: mimaadikarso@gmail.com</p>
                     </div>
                 </div>
 
-                <div class="text-center mb-8">
+                <div class="text-center mb-8 relative z-10">
                     <h2 class="font-bold text-lg underline decoration-1">SURAT KETERANGAN LULUS</h2>
                     <p class="text-sm">Nomor: <span id="nomorSurat"></span></p>
                 </div>
 
-                <p class="mb-6">Berdasarkan hasil rapat dewan guru MIS ADIKARSO Tahun Pelajaran 2025/2026, dengan ini menerangkan bahwa:</p>
+                <p class="mb-6 relative z-10">Berdasarkan hasil rapat dewan guru MIS ADIKARSO Tahun Pelajaran 2025/2026, dengan ini menerangkan bahwa:</p>
 
-                <div class="grid grid-cols-1 gap-2 mb-8">
+                <div class="grid grid-cols-1 gap-2 mb-8 relative z-10">
                     <div class="flex border-b border-gray-100 py-1">
-                        <span class="w-60">Nama Lengkap</span>
-                        <span class="flex-grow">: <span id="namaCetak" class="uppercase"></span></span>
+                        <span class="w-60 font-semibold">Nama Lengkap</span>
+                        <span class="flex-grow">: <span id="namaCetak" class="uppercase font-bold"></span></span>
                     </div>
                     <div class="flex border-b border-gray-100 py-1">
-                        <span class="w-60">Tempat, Tanggal Lahir</span>
+                        <span class="w-60 font-semibold">Tempat, Tanggal Lahir</span>
                         <span class="flex-grow">: <span id="ttlCetak"></span></span>
                     </div>
                     <div class="flex border-b border-gray-100 py-1">
-                        <span class="w-60">NISN</span>
+                        <span class="w-60 font-semibold">NISN</span>
                         <span class="flex-grow">: <span id="nisnCetak"></span></span>
                     </div>
                 </div>
 
-                <div class="text-center my-10">
+                <div class="text-center my-10 relative z-10">
                     <p class="font-bold mb-2">DINYATAKAN:</p>
-                    <div id="statusCetak" class="inline-block px-12 py-3 border-4 border-black font-black text-3xl rounded-xl"></div>
+                    <div id="statusCetak" class="inline-block px-12 py-3 border-4 border-black font-black text-3xl rounded-xl bg-white"></div>
                 </div>
 
-                <p class="text-justify mb-10">
-				Peserta didik tersebut telah menyelesaikan seluruh program pembelajaran dan memenuhi persyaratan kelulusan sesuai ketentuan yang berlaku.
-				<br>
-				Demikian keterangan ini diberikan agar dapat dipergunakan sebagaimana mestinya.
-				</p>
+                <p class="text-justify mb-10 relative z-10">
+                    Peserta didik tersebut telah menyelesaikan seluruh program pembelajaran dan memenuhi persyaratan kelulusan sesuai ketentuan yang berlaku.
+                    <br>
+                    Demikian keterangan ini diberikan agar dapat dipergunakan sebagaimana mestinya.
+                </p>
 
-                <div class="flex justify-end">
-    <div class="text-center w-64">
-        <p>Kebumen, 2 Juni 2026</p>
-        <p>Kepala Madrasah,</p>
-        
-        <div class="flex justify-center items-center my-2">
-            <img src="https://raw.githubusercontent.com/riyansumarno/mi-adikarso/refs/heads/main/aset/Iswahyuningsih_e-Sign.png" alt="Iswahyuningsih e-Sign" class="h-28 w-auto object-contain">
-        </div>
-        
-        <p class="font-bold underline">Iswahyuningsih, S.Pd.I.</p>
-        <p class="text-sm text-gray-600">NPK. 8826100090067</p>
-    </div>
-</div>
+                <div class="flex justify-end relative z-10">
+                    <div class="text-center w-64">
+                        <p>Kebumen, 2 Juni 2026</p>
+                        <p>Kepala Madrasah,</p>
+                        
+                        <div class="flex justify-center items-center my-2">
+                            <img src="https://raw.githubusercontent.com/riyansumarno/mi-adikarso/refs/heads/main/aset/Iswahyuningsih_e-Sign.png" alt="Iswahyuningsih e-Sign" class="h-28 w-auto object-contain">
+                        </div>
+                        
+                        <p class="font-bold underline">Iswahyuningsih, S.Pd.I.</p>
+                        <p class="text-sm text-gray-600">NPK. 8826100090067</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -194,7 +258,6 @@
     </div>
 
     <script>
-        // Data Mahasiswa - Tanggal Lahir diperbaiki sesuai format DDMMYYYY
         const students = [
             {nama:"ADINDA TRI AMELIA", nisn:"0142207607", tempat:"Kebumen", ttl:"05092014", ket:"LULUS"},
             {nama:"AHMAD IKLIILUDDIIN", nisn:"0136596454", tempat:"Kebumen", ttl:"12032013", ket:"LULUS"},
@@ -243,7 +306,6 @@
             {nama:"VICKY NABILA AZZAHRA", nisn:"0135885451", tempat:"Kebumen", ttl:"20052013", ket:"LULUS"}
         ];
 
-        // Listener untuk tombol Enter
         document.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 login();
@@ -285,18 +347,11 @@
                 return;
             }
 
-            // --- BAGIAN YANG DIPERBAIKI ---
-    // Mencari indeks siswa untuk menentukan urutan nomor (0, 1, 2, dst)
-    const urutanSiswa = students.findIndex(x => x.nisn === n);
-    
-    // Angka awal 198 ditambah urutan siswa
-    const nomorUrut = 198 + urutanSiswa;
-    
-    // Format nomor surat sesuai permintaan
-    const noSurat = `${nomorUrut}/MI.059/Kur.02/06/2026`;
-    // ------------------------------
+            const urutanSiswa = students.findIndex(x => x.nisn === n);
+            const nomorUrut = 198 + urutanSiswa;
+            const noSurat = `${nomorUrut}/MI.059/Kur.02/06/2026`;
 
-    document.getElementById('nomorSurat').innerText = noSurat;
+            document.getElementById('nomorSurat').innerText = noSurat;
             document.getElementById('namaCetak').innerText = s.nama;
             document.getElementById('nisnCetak').innerText = s.nisn;
             document.getElementById('ttlCetak').innerText = `${s.tempat}, ${formatTgl(s.ttl)}`;
