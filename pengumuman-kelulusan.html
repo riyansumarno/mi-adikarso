@@ -55,14 +55,12 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Area Kontainer Surat untuk Penempatan Watermark */
         .watermark-container {
             position: relative;
             z-index: 1;
             background-color: #ffffff;
         }
         
-        /* Teks Watermark Berada di Belakang Konten Utama */
         .watermark-text {
             position: absolute;
             top: 50%;
@@ -74,28 +72,39 @@
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
-            z-index: -1; /* Berada di bawah teks surat */
+            z-index: -1;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
         }
         
-        /* Aturan Cetak Ketat untuk Memutihkan Seluruh Latar Belakang */
         @media print {
             @page {
                 size: A4;
-                margin: 15mm;
+                margin: 10mm; /* Diperkecil agar pas di HP */
             }
-            /* Memaksa seluruh elemen luar menjadi transparan/putih dan menyembunyikannya */
-            html, body, .modal, .modal-content {
-                background: #ffffff !important;
-                background-color: #ffffff !important;
-                box-shadow: none !important;
+            html, body {
+                background: #fff !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .modal {
+                position: absolute !important;
+                display: block !important;
+                background: #fff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .modal-content {
+                max-height: none !important;
                 overflow: visible !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                width: 100% !important;
             }
             body * { 
                 visibility: hidden !important; 
             }
-            /* Hanya menampilkan area printArea */
             #printArea, #printArea * { 
                 visibility: visible !important; 
             }
@@ -104,26 +113,11 @@
                 left: 0 !important; 
                 top: 0 !important; 
                 width: 100% !important; 
-                background: #ffffff !important;
-                background-color: #ffffff !important;
-                box-shadow: none !important;
                 padding: 0 !important;
                 margin: 0 !important;
             }
-            #statusCetak {
-                background-color: transparent !important;
-                background: transparent !important;
-                -webkit-print-color-adjust: exact;
-            }
             .no-print { 
                 display: none !important; 
-            }
-            /* Memastikan teks watermark dipaksa muncul saat cetak */
-            .watermark-text {
-                visibility: visible !important;
-                color: rgba(0, 0, 0, 0.04) !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
             }
         }
     </style>
@@ -174,74 +168,67 @@
     <div id="hasil" class="hidden modal">
         <div class="modal-content shadow-2xl">
             <div class="p-4 bg-gray-50 border-b flex justify-between items-center no-print">
-                <span class="font-bold text-green-800 uppercase tracking-wide">Surat Keterangan Lulus</span>
+                <span class="font-bold text-green-800 uppercase tracking-wide text-xs md:text-base">Surat Keterangan Lulus</span>
                 <div class="flex gap-2">
-                    <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm transition">Cetak</button>
+                    <button onclick="unduhPDF()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm transition">Cetak</button>
                     <button onclick="closeModal()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md text-sm transition">Tutup</button>
                 </div>
             </div>
 
-            <!-- Print Area Utama -->
             <div id="printArea" class="p-8 md:p-12 bg-white text-black leading-relaxed watermark-container">
-                
-                <!-- Elemen Watermark Latar Belakang -->
                 <div class="watermark-text">MI ADIKARSO</div>
 
                 <div class="flex items-center border-b-4 border-black pb-4 mb-6">
-                    <img src="https://raw.githubusercontent.com/riyansumarno/mi-adikarso/refs/heads/main/aset/LP_Maarif_NU.jpg" class="h-20 w-auto mr-4">
+                    <img src="https://raw.githubusercontent.com/riyansumarno/mi-adikarso/refs/heads/main/aset/LP_Maarif_NU.jpg" class="h-16 md:h-20 w-auto mr-4">
                     <div class="text-center flex-grow">
-                        <h3 class="font-bold text-sm">LEMBAGA PENDIDIKAN MA’ARIF NU CABANG KEBUMEN</h3>
-                        <h1 class="font-bold text-xl md:text-2xl">MADRASAH IBTIDAIYAH (MI) ADIKARSO</h1>
-                        <p class="text-xs italic font-bold">STATUS: TERAKREDITASI A</p>
-                        <p class="text-[10px]">Alamat: Desa Adikarso, Kec. Kebumen, Kab. Kebumen, Jawa Tengah, 54351</p>
-                        <p class="text-[10px]">HP: 087871584844, Email: mimaadikarso@gmail.com</p>
+                        <h3 class="font-bold text-[10px] md:text-sm">LEMBAGA PENDIDIKAN MA’ARIF NU CABANG KEBUMEN</h3>
+                        <h1 class="font-bold text-base md:text-2xl uppercase">Madrasah Ibtidaiyah Adikarso</h1>
+                        <p class="text-[10px] italic font-bold">STATUS: TERAKREDITASI A</p>
+                        <p class="text-[9px] md:text-[10px]">Alamat: Desa Adikarso, Kec. Kebumen, Kab. Kebumen, Jawa Tengah, 54351</p>
+                        <p class="text-[9px] md:text-[10px]">HP: 087871584844, Email: mimaadikarso@gmail.com</p>
                     </div>
                 </div>
 
-                <div class="text-center mb-8">
+                <div class="text-center mb-6">
                     <h2 class="font-bold text-lg underline decoration-1">SURAT KETERANGAN LULUS</h2>
                     <p class="text-sm">Nomor: <span id="nomorSurat"></span></p>
                 </div>
 
-                <p class="text-justify mb-6">Berdasarkan hasil rapat dewan guru MI ADIKARSO Tahun Pelajaran 2025/2026, dengan ini menerangkan bahwa:</p>
+                <p class="text-sm md:text-base text-justify mb-4">Berdasarkan hasil rapat dewan guru MI ADIKARSO Tahun Pelajaran 2025/2026, dengan ini menerangkan bahwa:</p>
 
-                <div class="grid grid-cols-1 gap-2 mb-8">
+                <div class="grid grid-cols-1 gap-1 md:gap-2 mb-6 text-sm md:text-base">
                     <div class="flex border-b border-gray-100 py-1">
-                        <span class="w-60 font-semibold">Nama Lengkap</span>
+                        <span class="w-32 md:w-60 font-semibold">Nama Lengkap</span>
                         <span class="flex-grow">: <span id="namaCetak" class="uppercase font-semibold"></span></span>
                     </div>
                     <div class="flex border-b border-gray-100 py-1">
-                        <span class="w-60 font-semibold">Tempat, Tanggal Lahir</span>
+                        <span class="w-32 md:w-60 font-semibold">TTL</span>
                         <span class="flex-grow">: <span id="ttlCetak" class="font-semibold"></span></span>
                     </div>
                     <div class="flex border-b border-gray-100 py-1">
-                        <span class="w-60 font-semibold">NISN</span>
+                        <span class="w-32 md:w-60 font-semibold">NISN</span>
                         <span class="flex-grow">: <span id="nisnCetak" class="font-semibold"></span></span>
                     </div>
                 </div>
 
-                <div class="text-center my-10">
+                <div class="text-center my-6">
                     <p class="font-semibold mb-2">DINYATAKAN:</p>
-                    <div id="statusCetak" class="inline-block px-12 py-3 border-2 border-black font-black text-3xl rounded-xl bg-transparent relative z-10"></div>
+                    <div id="statusCetak" class="inline-block px-8 py-2 border-2 border-black font-black text-2xl rounded-xl bg-transparent relative z-10"></div>
                 </div>
 
-                <p class="text-justify mb-10">
-                    Peserta didik tersebut telah menyelesaikan seluruh program pembelajaran dan memenuhi persyaratan kelulusan sesuai ketentuan yang berlaku.
-                    <br>
-                    Demikian keterangan ini diberikan agar dapat dipergunakan sebagaimana mestinya.
+                <p class="text-sm md:text-base text-justify mb-8">
+                    Peserta didik tersebut telah menyelesaikan seluruh program pembelajaran dan memenuhi persyaratan kelulusan sesuai ketentuan. Demikian keterangan ini diberikan agar dapat dipergunakan sebagaimana mestinya.
                 </p>
 
                 <div class="flex justify-end">
-                    <div class="text-center w-64">
+                    <div class="text-center w-48 md:w-64 text-sm md:text-base">
                         <p>Kebumen, 2 Juni 2026</p>
                         <p>Kepala Madrasah,</p>
-                        
                         <div class="flex justify-center items-center my-2">
-                            <img src="https://raw.githubusercontent.com/riyansumarno/mi-adikarso/refs/heads/main/aset/Iswahyuningsih_e-Sign.png" alt="Iswahyuningsih e-Sign" class="h-28 w-auto object-contain">
+                            <img src="https://raw.githubusercontent.com/riyansumarno/mi-adikarso/refs/heads/main/aset/Iswahyuningsih_e-Sign.png" class="h-20 md:h-28 w-auto object-contain">
                         </div>
-                        
                         <p class="font-bold underline">Iswahyuningsih, S.Pd.I.</p>
-                        <p class="text-sm text-black-600">NPK. 8826100090067</p>
+                        <p class="text-xs">NPK. 8826100090067</p>
                     </div>
                 </div>
             </div>
@@ -252,13 +239,9 @@
         <div class="modal-content max-w-md p-6">
             <h3 class="text-xl font-bold text-green-800 mb-4">Cara Penggunaan</h3>
             <ul class="list-decimal list-inside space-y-3 text-gray-700 text-sm">
-                <li>Siapkan nomor <b>NISN</b> resmi Anda (10 digit).</li>
-                <li>Masukkan tanggal lahir sebagai kata sandi tanpa spasi atau tanda hubung (DDMMYYYY).
-                    <br><i class="text-xs text-gray-500">Contoh: Lahir 14 Mei 2014 ditulis <b>14052014</b></i>
-                </li>
-                <li>Klik tombol <b>"Lihat Hasil"</b> atau tekan tombol <b>Enter</b> pada keyboard.</li>
-                <li>Jika data benar, pop-up hasil kelulusan akan muncul secara otomatis.</li>
-                <li>Gunakan tombol <b>Cetak</b> jika ingin menyimpan dalam bentuk PDF atau print fisik dengan format kertas A4/Kuarto.</li>
+                <li>Gunakan 10 digit <b>NISN</b> resmi.</li>
+                <li>Gunakan format <b>DDMMYYYY</b> untuk password.</li>
+                <li>Klik <b>Cetak</b>, lalu pada tujuan pilih <b>"Simpan sebagai PDF"</b>.</li>
             </ul>
             <button onclick="toggleHelp()" class="w-full mt-6 bg-gray-800 text-white py-2 rounded-lg">Saya Mengerti</button>
         </div>
@@ -266,106 +249,96 @@
 
     <script>
         const students = [
-            {nama:"ADINDA TRI AMELIA", nisn:"0142207607", tempat:"Kebumen", ttl:"05092014", ket:"LULUS"},
-            {nama:"AHMAD IKLIILUDDIIN", nisn:"0136596454", tempat:"Kebumen", ttl:"12032013", ket:"LULUS"},
-            {nama:"AKHMAD FATHUR ROHMAN", nisn:"0143688767", tempat:"Kebumen", ttl:"02092014", ket:"LULUS"},
-            {nama:"ALISIA PRAMESTI ZAHRANI PUTRI", nisn:"3132767925", tempat:"Kebumen", ttl:"17062013", ket:"LULUS"},
-            {nama:"AR'RAYSHA ARGHI SHAYMONA", nisn:"0131573177", tempat:"Kebumen", ttl:"10112013", ket:"LULUS"},
-            {nama:"DINDA HAPSARI", nisn:"0141187827", tempat:"Kebumen", ttl:"06112014", ket:"LULUS"},
-            {nama:"FATIN KHOIRUNNISA", nisn:"0142799882", tempat:"Kebumen", ttl:"30052014", ket:"LULUS"},
-            {nama:"GHAZIYA PUTRI NATHIFA", nisn:"0142556149", tempat:"Tangerang", ttl:"12062014", ket:"LULUS"},
-            {nama:"HASNA AMELIYA FARRAS WATI", nisn:"3133508790", tempat:"Kebumen", ttl:"21072013", ket:"LULUS"},
-            {nama:"HASNA DIYANA HAMIDAH", nisn:"0138416853", tempat:"Kebumen", ttl:"18102013", ket:"LULUS"},
-            {nama:"HASNA UMY MAHFUDOH", nisn:"0132288255", tempat:"Kebumen", ttl:"30092013", ket:"LULUS"},
-            {nama:"JIDAN NABIL ADIYATMA", nisn:"0131539999", tempat:"Kebumen", ttl:"15062013", ket:"LULUS"},
-            {nama:"JIHAN MUTHIA NAILA", nisn:"3132614997", tempat:"Kebumen", ttl:"01052013", ket:"LULUS"},
-            {nama:"KALINGGA MURDANING AKRAMI", nisn:"0135990316", tempat:"Kebumen", ttl:"15062013", ket:"LULUS"},
-            {nama:"MUHAMAD DHOFRI KAMALI", nisn:"3134154058", tempat:"Jakarta", ttl:"07032013", ket:"LULUS"},
-            {nama:"MUHAMAD RIFQI MAULANA", nisn:"0141116979", tempat:"Kebumen", ttl:"06032014", ket:"LULUS"},
-            {nama:"MUHAMBALL FADHIL MUZAKI", nisn:"3145353811", tempat:"Banyumas", ttl:"30052014", ket:"LULUS"},
-            {nama:"MUHAMMAD FARREL SETYA RAMADHANI", nisn:"3131080748", tempat:"Kebumen", ttl:"30072013", ket:"LULUS"},
-            {nama:"MUHAMMAD KAFA RAMADHAN", nisn:"0141435276", tempat:"Kebumen", ttl:"25072014", ket:"LULUS"},
-            {nama:"MUKHAMAD RAFA", nisn:"3120763254", tempat:"Kebumen", ttl:"04122012", ket:"LULUS"},
-            {nama:"NUR LAELATUL FAJRIAH", nisn:"3137767091", tempat:"Banjarnegara", ttl:"03072013", ket:"LULUS"},
-            {nama:"WULAN SUCI RAMADHAN", nisn:"3138392336", tempat:"Kebumen", ttl:"07082013", ket:"LULUS"},
-            {nama:"YAOMY FARDANA", nisn:"0134717575", tempat:"Kebumen", ttl:"13072013", ket:"LULUS"},
-            {nama:"ADELIA RAHMAWATI", nisn:"0115774289", tempat:"Kebumen", ttl:"24012014", ket:"LULUS"},
-            {nama:"ADINDA AULIA PUTRI", nisn:"0114315385", tempat:"Kebumen", ttl:"07032014", ket:"LULUS"},
-            {nama:"AGNES RIYANI FATIMAH AZZAHRA", nisn:"0118777584", tempat:"Kebumen", ttl:"19062014", ket:"LULUS"},
-            {nama:"ALFIA DIANING ZULFAH RAHMADHANI", nisn:"0112502295", tempat:"Kebumen", ttl:"10072014", ket:"LULUS"},
-            {nama:"ALIFA AQILA ZAHRA", nisn:"3124599304", tempat:"Kebumen", ttl:"04102013", ket:"LULUS"},
-            {nama:"AMRI ADIL DERMAWAN", nisn:"3124643905", tempat:"Kebumen", ttl:"23052014", ket:"LULUS"},
-            {nama:"ANDIKA KASYA PRANULI", nisn:"3128267073", tempat:"Kebumen", ttl:"23022014", ket:"LULUS"},
-            {nama:"AYDUHA HUWAIDA", nisn:"3128779281", tempat:"Kebumen", ttl:"20042014", ket:"LULUS"},
-            {nama:"FAAIZAH RISKY IRFANIA", nisn:"0117820055", tempat:"Kebumen", ttl:"24032014", ket:"LULUS"},
-            {nama:"GIYAN RADITYA ARDANI", nisn:"0094420524", tempat:"Kebumen", ttl:"13032014", ket:"LULUS"},
-            {nama:"LIA RAHMAWATI", nisn:"0111288474", tempat:"Kebumen", ttl:"06062012", ket:"LULUS"},
-            {nama:"LUBADAH MABRUROH", nisn:"0111288474", tempat:"Kebumen", ttl:"28012013", ket:"LULUS"},
-            {nama:"MAULINA NUR HIDAYAH", nisn:"3121384003", tempat:"Cilacap", ttl:"18012014", ket:"LULUS"},
-            {nama:"MOHAMAD RASYA ZAENURI", nisn:"3117108843", tempat:"Kebumen", ttl:"16102013", ket:"LULUS"},
-            {nama:"MUDRIK KAMALA", nisn:"0127893512", tempat:"Kebumen", ttl:"28122013", ket:"LULUS"},
-            {nama:"MUFTIKHATUL LAILA", nisn:"3112216099", tempat:"Kebumen", ttl:"13102014", ket:"LULUS"},
-            {nama:"MUSA IKHSANUDIN MUBAROK", nisn:"3132461318", tempat:"Kebumen", ttl:"28122013", ket:"LULUS"},
-            {nama:"NAILA SOFIA", nisn:"3113304523", tempat:"Kebumen", ttl:"04052014", ket:"LULUS"},
-            {nama:"QAILA ADELIA PUTRI", nisn:"3118237400", tempat:"Kebumen", ttl:"28032014", ket:"LULUS"},
-            {nama:"RAJASWA ARKA NUFAIL", nisn:"3113334301", tempat:"Kebumen", ttl:"04112013", ket:"LULUS"},
-            {nama:"RESQI NURWAHID", nisn:"3137631846", tempat:"Kebumen", ttl:"28112013", ket:"LULUS"},
-            {nama:"VICKY NABILA AZZAHRA", nisn:"0135885451", tempat:"Kebumen", ttl:"20052013", ket:"LULUS"}
+            {nama:"Adinda Tri Amelia", nisn:"0142207607", tempat:"Kebumen", ttl:"05092014", ket:"LULUS"},
+            {nama:"Ahmad Ikliiluddiin", nisn:"0136596454", tempat:"Kebumen", ttl:"12032013", ket:"LULUS"},
+            {nama:"Akhmad Fathur Rohman", nisn:"0143688767", tempat:"Kebumen", ttl:"02092014", ket:"LULUS"},
+            {nama:"Alisia Pramesti Zahrani Putri", nisn:"3132767925", tempat:"Kebumen", ttl:"17062013", ket:"LULUS"},
+            {nama:"Ar'raysha Arghi Shaymona", nisn:"0131573177", tempat:"Kebumen", ttl:"10112013", ket:"LULUS"},
+            {nama:"Dinda Hapsari", nisn:"0141187827", tempat:"Kebumen", ttl:"06112014", ket:"LULUS"},
+            {nama:"Fatin Khoirunnisa", nisn:"0142799882", tempat:"Kebumen", ttl:"30052014", ket:"LULUS"},
+            {nama:"Ghaziya Putri Nathifa", nisn:"0142556149", tempat:"Tangerang", ttl:"12062014", ket:"LULUS"},
+            {nama:"Hasna Ameliya Farras Wati", nisn:"3133508790", tempat:"Kebumen", ttl:"21072013", ket:"LULUS"},
+            {nama:"Hasna Diyana Hamidah", nisn:"0138416853", tempat:"Kebumen", ttl:"18102013", ket:"LULUS"},
+            {nama:"Hasna Umy Mahfudoh", nisn:"0132288255", tempat:"Kebumen", ttl:"30092013", ket:"LULUS"},
+            {nama:"Jidan Nabil Adiyatma", nisn:"0131539999", tempat:"Kebumen", ttl:"15062013", ket:"LULUS"},
+            {nama:"Jihan Muthia Naila", nisn:"3132614997", tempat:"Kebumen", ttl:"01052013", ket:"LULUS"},
+            {nama:"Kalingga Murdaning Akrami", nisn:"0135990316", tempat:"Kebumen", ttl:"15062013", ket:"LULUS"},
+            {nama:"Muhamad Dhofri Kamali", nisn:"3134154058", tempat:"Jakarta", ttl:"07032013", ket:"LULUS"},
+            {nama:"Muhamad Rifqi Maulana", nisn:"0141116979", tempat:"Kebumen", ttl:"06032014", ket:"LULUS"},
+            {nama:"Muhamball Fadhil Muzaki", nisn:"3145353811", tempat:"Banyumas", ttl:"30052014", ket:"LULUS"},
+            {nama:"Muhammad Farrel Setya Ramadhani", nisn:"3131080748", tempat:"Kebumen", ttl:"30072013", ket:"LULUS"},
+            {nama:"Muhammad Kafa Ramadhan", nisn:"0141435276", tempat:"Kebumen", ttl:"25072014", ket:"LULUS"},
+            {nama:"Mukhamad Rafa", nisn:"3120763254", tempat:"Kebumen", ttl:"04122012", ket:"LULUS"},
+            {nama:"Nur Laelatul Fajriah", nisn:"3137767091", tempat:"Banjarnegara", ttl:"03072013", ket:"LULUS"},
+            {nama:"Wulan Suci Ramadhan", nisn:"3138392336", tempat:"Kebumen", ttl:"07082013", ket:"LULUS"},
+            {nama:"Yaomy Fardana", nisn:"0134717575", tempat:"Kebumen", ttl:"13072013", ket:"LULUS"},
+            {nama:"Adelia Rahmawati", nisn:"0115774289", tempat:"Kebumen", ttl:"24012014", ket:"LULUS"},
+            {nama:"Adinda Aulia Putri", nisn:"0114315385", tempat:"Kebumen", ttl:"07032014", ket:"LULUS"},
+            {nama:"Agnes Riyani Fatimah Azzahra", nisn:"0118777584", tempat:"Kebumen", ttl:"19062014", ket:"LULUS"},
+            {nama:"Alfia Dianing Zulfah Rahmadhani", nisn:"0112502295", tempat:"Kebumen", ttl:"10072014", ket:"LULUS"},
+            {nama:"Alifa Aqila Zahra", nisn:"3124599304", tempat:"Kebumen", ttl:"04102013", ket:"LULUS"},
+            {nama:"Amri Adil Dermawan", nisn:"3124643905", tempat:"Kebumen", ttl:"23052014", ket:"LULUS"},
+            {nama:"Andika Kasya Pranuli", nisn:"3128267073", tempat:"Kebumen", ttl:"23022014", ket:"LULUS"},
+            {nama:"Ayduha Huwaida", nisn:"3128779281", tempat:"Kebumen", ttl:"20042014", ket:"LULUS"},
+            {nama:"Faaizah Risky Irfania", nisn:"0117820055", tempat:"Kebumen", ttl:"24032014", ket:"LULUS"},
+            {nama:"Giyan Raditya Ardani", nisn:"0094420524", tempat:"Kebumen", ttl:"13032014", ket:"LULUS"},
+            {nama:"Lia Rahmawati", nisn:"0111288474", tempat:"Kebumen", ttl:"06062012", ket:"LULUS"},
+            {nama:"Lubadah Mabruroh", nisn:"0111288474", tempat:"Kebumen", ttl:"28012013", ket:"LULUS"},
+            {nama:"Maulina Nur Hidayah", nisn:"3121384003", tempat:"Cilacap", ttl:"18012014", ket:"LULUS"},
+            {nama:"Mohamad Rasya Zaenuri", nisn:"3117108843", tempat:"Kebumen", ttl:"16102013", ket:"LULUS"},
+            {nama:"Mudrik Kamala", nisn:"0127893512", tempat:"Kebumen", ttl:"28122013", ket:"LULUS"},
+            {nama:"Muftikhatul Laila", nisn:"3112216099", tempat:"Kebumen", ttl:"13102014", ket:"LULUS"},
+            {nama:"Musa Ikhsanudin Mubarok", nisn:"3132461318", tempat:"Kebumen", ttl:"28122013", ket:"LULUS"},
+            {nama:"Naila Sofia", nisn:"3113304523", tempat:"Kebumen", ttl:"04052014", ket:"LULUS"},
+            {nama:"Qaila Adelia Putri", nisn:"3118237400", tempat:"Kebumen", ttl:"28032014", ket:"LULUS"},
+            {nama:"Rajaswa Arka Nufail", nisn:"3113334301", tempat:"Kebumen", ttl:"04112013", ket:"LULUS"},
+            {nama:"Resqi Nurwahid", nisn:"3137631846", tempat:"Kebumen", ttl:"28112013", ket:"LULUS"},
+            {nama:"Vicky Nabila Azzahra", nisn:"0135885451", tempat:"Kebumen", ttl:"20052013", ket:"LULUS"}
         ];
 
-        document.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                login();
-            }
-        });
-
-        function togglePassword() {
-            const pw = document.getElementById('pw');
-            pw.type = pw.type === 'password' ? 'text' : 'password';
-        }
-
-        function toggleHelp() {
-            const help = document.getElementById('helpModal');
-            help.classList.toggle('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('hasil').classList.add('hidden');
-        }
+        let currentStudent = null;
 
         function login() {
             const n = document.getElementById('nisn').value.trim();
             const p = document.getElementById('pw').value.trim();
             const errorDiv = document.getElementById('error-msg');
-            
             errorDiv.classList.add('hidden');
 
-            if(!n || !p) {
-                errorDiv.innerText = "Silakan isi NISN dan Tanggal Lahir!";
-                errorDiv.classList.remove('hidden');
-                return;
-            }
-
             const s = students.find(x => x.nisn === n && x.ttl === p);
-
             if (!s) {
-                errorDiv.innerText = "Data tidak ditemukan. Pastikan NISN dan format tanggal lahir (DDMMYYYY) benar.";
+                errorDiv.innerText = "Data tidak ditemukan!";
                 errorDiv.classList.remove('hidden');
                 return;
             }
 
+            currentStudent = s;
             const urutanSiswa = students.findIndex(x => x.nisn === n);
-            const nomorUrut = 198 + urutanSiswa;
-            const noSurat = `${nomorUrut}/MI.059/Kur.02/06/2026`;
+            const noSurat = `${198 + urutanSiswa}/MI.059/Kur.02/06/2026`;
 
             document.getElementById('nomorSurat').innerText = noSurat;
             document.getElementById('namaCetak').innerText = s.nama;
             document.getElementById('nisnCetak').innerText = s.nisn;
             document.getElementById('ttlCetak').innerText = `${s.tempat}, ${formatTgl(s.ttl)}`;
             document.getElementById('statusCetak').innerText = s.ket;
-
             document.getElementById('hasil').classList.remove('hidden');
         }
+
+        function unduhPDF() {
+			if (currentStudent) {
+				const originalTitle = document.title;
+				
+				// Format Nama File: Nama NISN_SKL.pdf
+				// Nama tetap menggunakan spasi sesuai input data
+				document.title = `${currentStudent.nama}_${currentStudent.nisn}_SKL`;
+				
+				window.print();
+				
+				// Mengembalikan judul tab browser ke semula setelah 1 detik
+				setTimeout(() => {
+					document.title = originalTitle;
+				}, 1000);
+			}
+		}
 
         function formatTgl(str) {
             const hari = str.substring(0, 2);
@@ -373,6 +346,19 @@
             const bulan = bulanArr[parseInt(str.substring(2, 4)) - 1];
             const tahun = str.substring(4);
             return `${hari} ${bulan} ${tahun}`;
+        }
+
+        function togglePassword() {
+            const pw = document.getElementById('pw');
+            pw.type = pw.type === 'password' ? 'text' : 'password';
+        }
+
+        function toggleHelp() {
+            document.getElementById('helpModal').classList.toggle('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('hasil').classList.add('hidden');
         }
     </script>
 </body>
