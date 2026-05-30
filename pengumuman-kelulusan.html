@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pengumuman Kelulusan MIS ADIKARSO</title>
+    <title>Pengumuman Kelulusan MI ADIKARSO</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
@@ -55,47 +55,55 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Gaya Watermark di Layar */
+        /* Area Kontainer Surat untuk Penempatan Watermark */
         .watermark-container {
             position: relative;
-            overflow: hidden;
+            z-index: 1;
+            background-color: #ffffff;
         }
+        
+        /* Teks Watermark Berada di Belakang Konten Utama */
         .watermark-text {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) rotate(-30deg);
-            font-size: 5rem;
+            font-size: 5.5rem;
             font-weight: 900;
-            color: rgba(0, 0, 0, 0.03);
+            color: rgba(0, 0, 0, 0.04) !important;
             white-space: nowrap;
             pointer-events: none;
             user-select: none;
-            z-index: 0;
+            z-index: -1; /* Berada di bawah teks surat */
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
         }
         
-        /* Optimasi Cetak Putih Bersih */
+        /* Aturan Cetak Ketat untuk Memutihkan Seluruh Latar Belakang */
         @media print {
             @page {
                 size: A4;
                 margin: 15mm;
             }
-            body {
+            /* Memaksa seluruh elemen luar menjadi transparan/putih dan menyembunyikannya */
+            html, body, .modal, .modal-content {
                 background: #ffffff !important;
                 background-color: #ffffff !important;
-                color: #000000 !important;
+                box-shadow: none !important;
+                overflow: visible !important;
             }
             body * { 
-                visibility: hidden; 
+                visibility: hidden !important; 
             }
+            /* Hanya menampilkan area printArea */
             #printArea, #printArea * { 
-                visibility: visible; 
+                visibility: visible !important; 
             }
             #printArea { 
-                position: absolute; 
-                left: 0; 
-                top: 0; 
-                width: 100%; 
+                position: absolute !important; 
+                left: 0 !important; 
+                top: 0 !important; 
+                width: 100% !important; 
                 background: #ffffff !important;
                 background-color: #ffffff !important;
                 box-shadow: none !important;
@@ -105,16 +113,10 @@
             .no-print { 
                 display: none !important; 
             }
-            /* Menghilangkan sisa warna komponen luar saat dicetak */
-            .modal, .modal-content {
-                background: transparent !important;
-                background-color: transparent !important;
-                box-shadow: none !important;
-                overflow: visible !important;
-            }
-            /* Menjaga teks bayangan tetap tipis saat diprint */
+            /* Memastikan teks watermark dipaksa muncul saat cetak */
             .watermark-text {
-                color: rgba(0, 0, 0, 0.03) !important;
+                visibility: visible !important;
+                color: rgba(0, 0, 0, 0.04) !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
@@ -129,7 +131,7 @@
         </div>
         
         <h1 class="text-2xl font-bold text-center text-gray-800">PENGUMUMAN KELULUSAN</h1>
-        <p class="text-center text-gray-600 mb-6">MIS ADIKARSO TP. 2025/2026</p>
+        <p class="text-center text-gray-600 mb-6">MI ADIKARSO TP. 2025/2026</p>
 
         <div id="error-msg" class="hidden mb-4 p-3 bg-red-100 border-l-4 border-red-500 text-red-700 text-sm"></div>
 
@@ -161,7 +163,7 @@
             </button>
         </div>
 
-        <p class="text-center text-xs text-gray-400 mt-8">© <script>document.write(new Date().getFullYear())</script> MIS Adikarso • LP Ma'arif NU • Giting Creative</p>
+        <p class="text-center text-xs text-gray-400 mt-8">© <script>document.write(new Date().getFullYear())</script> MI Adikarso • LP Ma'arif NU • Giting Creative</p>
     </div>
 
     <div id="hasil" class="hidden modal">
@@ -174,13 +176,13 @@
                 </div>
             </div>
 
-            <!-- Print Area dengan Watermark -->
+            <!-- Print Area Utama -->
             <div id="printArea" class="p-8 md:p-12 bg-white text-black leading-relaxed watermark-container">
                 
-                <!-- Teks Watermark Latar Belakang -->
+                <!-- Elemen Watermark Latar Belakang -->
                 <div class="watermark-text">MI ADIKARSO</div>
 
-                <div class="flex items-center border-b-4 border-black pb-4 mb-6 relative z-10">
+                <div class="flex items-center border-b-4 border-black pb-4 mb-6">
                     <img src="https://raw.githubusercontent.com/riyansumarno/mi-adikarso/refs/heads/main/aset/LP_Maarif_NU.jpg" class="h-20 w-auto mr-4">
                     <div class="text-center flex-grow">
                         <h3 class="font-bold text-sm">LEMBAGA PENDIDIKAN MA’ARIF NU CABANG KEBUMEN</h3>
@@ -191,14 +193,14 @@
                     </div>
                 </div>
 
-                <div class="text-center mb-8 relative z-10">
+                <div class="text-center mb-8">
                     <h2 class="font-bold text-lg underline decoration-1">SURAT KETERANGAN LULUS</h2>
                     <p class="text-sm">Nomor: <span id="nomorSurat"></span></p>
                 </div>
 
-                <p class="mb-6 relative z-10">Berdasarkan hasil rapat dewan guru MIS ADIKARSO Tahun Pelajaran 2025/2026, dengan ini menerangkan bahwa:</p>
+                <p class="mb-6">Berdasarkan hasil rapat dewan guru MI ADIKARSO Tahun Pelajaran 2025/2026, dengan ini menerangkan bahwa:</p>
 
-                <div class="grid grid-cols-1 gap-2 mb-8 relative z-10">
+                <div class="grid grid-cols-1 gap-2 mb-8">
                     <div class="flex border-b border-gray-100 py-1">
                         <span class="w-60 font-semibold">Nama Lengkap</span>
                         <span class="flex-grow">: <span id="namaCetak" class="uppercase font-bold"></span></span>
@@ -213,18 +215,18 @@
                     </div>
                 </div>
 
-                <div class="text-center my-10 relative z-10">
+                <div class="text-center my-10">
                     <p class="font-bold mb-2">DINYATAKAN:</p>
                     <div id="statusCetak" class="inline-block px-12 py-3 border-4 border-black font-black text-3xl rounded-xl bg-white"></div>
                 </div>
 
-                <p class="text-justify mb-10 relative z-10">
+                <p class="text-justify mb-10">
                     Peserta didik tersebut telah menyelesaikan seluruh program pembelajaran dan memenuhi persyaratan kelulusan sesuai ketentuan yang berlaku.
                     <br>
                     Demikian keterangan ini diberikan agar dapat dipergunakan sebagaimana mestinya.
                 </p>
 
-                <div class="flex justify-end relative z-10">
+                <div class="flex justify-end">
                     <div class="text-center w-64">
                         <p>Kebumen, 2 Juni 2026</p>
                         <p>Kepala Madrasah,</p>
@@ -275,7 +277,7 @@
             {nama:"KALINGGA MURDANING AKRAMI", nisn:"0135990316", tempat:"Kebumen", ttl:"15062013", ket:"LULUS"},
             {nama:"MUHAMAD DHOFRI KAMALI", nisn:"3134154058", tempat:"Jakarta", ttl:"07032013", ket:"LULUS"},
             {nama:"MUHAMAD RIFQI MAULANA", nisn:"0141116979", tempat:"Kebumen", ttl:"06032014", ket:"LULUS"},
-            {nama:"MUHAMMAD FADHIL MUZAKI", nisn:"3145353811", tempat:"Banyumas", ttl:"30052014", ket:"LULUS"},
+            {nama:"MUHAMBALL FADHIL MUZAKI", nisn:"3145353811", tempat:"Banyumas", ttl:"30052014", ket:"LULUS"},
             {nama:"MUHAMMAD FARREL SETYA RAMADHANI", nisn:"3131080748", tempat:"Kebumen", ttl:"30072013", ket:"LULUS"},
             {nama:"MUHAMMAD KAFA RAMADHAN", nisn:"0141435276", tempat:"Kebumen", ttl:"25072014", ket:"LULUS"},
             {nama:"MUKHAMAD RAFA", nisn:"3120763254", tempat:"Kebumen", ttl:"04122012", ket:"LULUS"},
