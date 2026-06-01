@@ -6,7 +6,7 @@
     <title>Pengumuman Kelulusan MI ADIKARSO</title>
 	<link rel="icon" type="image/x-icon" href="aset/img/favicon.jpg">
     <script src="https://cdn.tailwindcss.com"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+	<script src="aset/data/data_siswa.js"></script>
     <style>
         :root {
             --nu-green: #008141;
@@ -254,43 +254,8 @@
     </div>
 
     <script>
-    let students = [];
-    let currentStudent = null;
-
-    async function loadDataExcel() {
-    // Menambahkan timestamp agar browser tidak mengambil data lama/cache
-    const url = "https://cdn.jsdelivr.net/gh/riyansumarno/mi-adikarso@main/aset/data/data_siswa.xlsx?v=" + new Date().getTime(); 
-    
-    try {
-        const response = await fetch(url, {
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-            }
-        });
-
-        if (!response.ok) throw new Error('Network response was not ok');
-        
-        const arrayBuffer = await response.arrayBuffer();
-        const data = new Uint8Array(arrayBuffer);
-        const workbook = XLSX.read(data, { type: 'array' });
-        
-        const firstSheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[firstSheetName];
-        
-        // Memastikan data dibaca sebagai string untuk menghindari angka hilang/berubah
-        students = XLSX.utils.sheet_to_json(worksheet, { defval: "", raw: false });
-        console.log("Koneksi berhasil, data dimuat.");
-    } catch (error) {
-        console.error("Detail Error:", error);
-        // Jika gagal dari CDN, coba link alternatif langsung
-        document.getElementById('error-msg').innerText = "Gagal memuat database. Mencoba rekoneksi...";
-        document.getElementById('error-msg').classList.remove('hidden');
-    }
-}
+		let currentStudent = null;
 		
-    window.onload = loadDataExcel;
-
         function login() {
         const n = document.getElementById('nisn').value.trim();
         const p = document.getElementById('pw').value.trim();
