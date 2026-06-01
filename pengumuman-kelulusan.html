@@ -254,13 +254,11 @@
     </div>
 
     <script>
-        // 2. Ganti array manual dengan variabel kosong
     let students = [];
     let currentStudent = null;
 
-    // 3. Fungsi untuk mengambil data Excel dari URL (GitHub/Server)
     async function loadDataExcel() {
-        const url = "aset/data/data_siswa.xlsx"; // GANTI DENGAN URL EXCEL ANDA
+        const url = "https://github.com/riyansumarno/mi-adikarso/raw/refs/heads/main/aset/data/data_siswa.xlsx";
         try {
             const response = await fetch(url);
             const arrayBuffer = await response.arrayBuffer();
@@ -280,8 +278,7 @@
             document.getElementById('error-msg').classList.remove('hidden');
         }
     }
-
-    // Jalankan fungsi saat halaman dibuka
+		
     window.onload = loadDataExcel;
 
         function login() {
