@@ -258,26 +258,28 @@
     let currentStudent = null;
 
     async function loadDataExcel() {
-        const url = "https://github.com/riyansumarno/mi-adikarso/raw/refs/heads/main/aset/data/data_siswa.xlsx";
-        try {
-            const response = await fetch(url);
-            const arrayBuffer = await response.arrayBuffer();
-            const data = new Uint8Array(arrayBuffer);
-            const workbook = XLSX.read(data, { type: 'array' });
-            
-            // Ambil sheet pertama
-            const firstSheetName = workbook.SheetNames[0];
-            const worksheet = workbook.Sheets[firstSheetName];
-            
-            // Konversi ke JSON dan simpan ke variabel students
-            students = XLSX.utils.sheet_to_json(worksheet);
-            console.log("Data berhasil dimuat:", students.length, "siswa");
-        } catch (error) {
-            console.error("Gagal memuat file Excel:", error);
-            document.getElementById('error-msg').innerText = "Gagal memuat database siswa. Periksa koneksi internet.";
-            document.getElementById('error-msg').classList.remove('hidden');
-        }
+    // Tambahkan prefix cors-anywhere atau gunakan link JSDelivr (lebih stabil untuk GitHub)
+    const url = "https://cdn.jsdelivr.net/gh/riyansumarno/mi-adikarso@main/aset/data/data_siswa.xlsx"; 
+    
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('File tidak ditemukan di server');
+        
+        const arrayBuffer = await response.arrayBuffer();
+        const data = new Uint8Array(arrayBuffer);
+        const workbook = XLSX.read(data, { type: 'array' });
+        
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        
+        students = XLSX.utils.sheet_to_json(worksheet);
+        console.log("Data berhasil dimuat:", students.length, "siswa");
+    } catch (error) {
+        console.error("Gagal memuat file Excel:", error);
+        document.getElementById('error-msg').innerText = "Sistem gagal sinkronisasi database. Pastikan koneksi stabil.";
+        document.getElementById('error-msg').classList.remove('hidden');
     }
+}
 		
     window.onload = loadDataExcel;
 
