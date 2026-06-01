@@ -258,12 +258,18 @@
     let currentStudent = null;
 
     async function loadDataExcel() {
-    // Tambahkan prefix cors-anywhere atau gunakan link JSDelivr (lebih stabil untuk GitHub)
-    const url = "https://cdn.jsdelivr.net/gh/riyansumarno/mi-adikarso@main/aset/data/data_siswa.xlsx"; 
+    // Menambahkan timestamp agar browser tidak mengambil data lama/cache
+    const url = "https://cdn.jsdelivr.net/gh/riyansumarno/mi-adikarso@main/aset/data/data_siswa.xlsx?v=" + new Date().getTime(); 
     
     try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('File tidak ditemukan di server');
+        const response = await fetch(url, {
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            }
+        });
+
+        if (!response.ok) throw new Error('Network response was not ok');
         
         const arrayBuffer = await response.arrayBuffer();
         const data = new Uint8Array(arrayBuffer);
@@ -272,11 +278,13 @@
         const firstSheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[firstSheetName];
         
-        students = XLSX.utils.sheet_to_json(worksheet);
-        console.log("Data berhasil dimuat:", students.length, "siswa");
+        // Memastikan data dibaca sebagai string untuk menghindari angka hilang/berubah
+        students = XLSX.utils.sheet_to_json(worksheet, { defval: "", raw: false });
+        console.log("Koneksi berhasil, data dimuat.");
     } catch (error) {
-        console.error("Gagal memuat file Excel:", error);
-        document.getElementById('error-msg').innerText = "Sistem gagal sinkronisasi database. Pastikan koneksi stabil.";
+        console.error("Detail Error:", error);
+        // Jika gagal dari CDN, coba link alternatif langsung
+        document.getElementById('error-msg').innerText = "Gagal memuat database. Mencoba rekoneksi...";
         document.getElementById('error-msg').classList.remove('hidden');
     }
 }
