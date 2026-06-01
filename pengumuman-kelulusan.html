@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pengumuman Kelulusan MI ADIKARSO</title>
-	<link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/riyansumarno/mi-adikarso/refs/heads/main/aset/LP_Maarif_NU.jpg">
+	<link rel="icon" type="image/x-icon" href="aset/img/favicon.jpg">
     <script src="https://cdn.tailwindcss.com"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         :root {
             --nu-green: #008141;
@@ -127,7 +128,7 @@
 
     <div class="w-full max-w-md login-card rounded-2xl p-8 no-print">
         <div class="flex justify-center mb-4">
-            <img src="https://raw.githubusercontent.com/riyansumarno/mi-adikarso/refs/heads/main/aset/LP_Maarif_NU.jpg" alt="Logo LP Maarif" class="h-24 w-auto">
+            <img src="aset/img/LP_Maarif_NU.jpg" alt="Logo LP Maarif" class="h-24 w-auto">
         </div>
         
         <h1 class="text-2xl font-bold text-center text-gray-800">PENGUMUMAN KELULUSAN</h1>
@@ -180,7 +181,7 @@
                 <div class="watermark-text">MI ADIKARSO</div>
 
                 <div class="flex items-center border-b-4 border-black pb-4 mb-6">
-                    <img src="https://raw.githubusercontent.com/riyansumarno/mi-adikarso/refs/heads/main/aset/LP_Maarif_NU.jpg" class="h-16 md:h-20 w-auto mr-4">
+                    <img src="aset/img/LP_Maarif_NU.jpg" class="h-16 md:h-20 w-auto mr-4">
                     <div class="text-center flex-grow">
                         <h3 class="font-bold text-[10px] md:text-sm">LEMBAGA PENDIDIKAN MA’ARIF NU CABANG KEBUMEN</h3>
                         <h1 class="font-bold text-base md:text-2xl uppercase">Madrasah Ibtidaiyah Adikarso</h1>
@@ -226,7 +227,7 @@
                         <p>Kebumen, 2 Juni 2026</p>
                         <p>Kepala Madrasah,</p>
                         <div class="flex justify-center items-center my-2">
-                            <img src="https://raw.githubusercontent.com/riyansumarno/mi-adikarso/refs/heads/main/aset/Iswahyuningsih_e-Sign.png" class="h-20 md:h-28 w-auto object-contain">
+                            <img src="aset/img/Iswahyuningsih_e-Sign.png" class="h-20 md:h-28 w-auto object-contain">
                         </div>
                         <p class="font-bold underline">Iswahyuningsih, S.Pd.I.</p>
                         <p class="text-xs">NPK. 8826100090067</p>
@@ -253,112 +254,87 @@
     </div>
 
     <script>
-        const students = [
-            {nama:"Adinda Tri Amelia", nisn:"0142207607", tempat:"Kebumen", ttl:"05092014", ket:"LULUS"},
-            {nama:"Ahmad Ikliiluddiin", nisn:"0136596454", tempat:"Kebumen", ttl:"12032013", ket:"LULUS"},
-            {nama:"Akhmad Fathur Rohman", nisn:"0143688767", tempat:"Kebumen", ttl:"02092014", ket:"LULUS"},
-            {nama:"Alisia Pramesti Zahrani Putri", nisn:"3132767925", tempat:"Kebumen", ttl:"17062013", ket:"LULUS"},
-            {nama:"Ar'raysha Arghi Shaymona", nisn:"0131573177", tempat:"Kebumen", ttl:"10112013", ket:"LULUS"},
-            {nama:"Dinda Hapsari", nisn:"0141187827", tempat:"Kebumen", ttl:"06112014", ket:"LULUS"},
-            {nama:"Fatin Khoirunnisa", nisn:"0142799882", tempat:"Kebumen", ttl:"30052014", ket:"LULUS"},
-            {nama:"Ghaziya Putri Nathifa", nisn:"0142556149", tempat:"Tangerang", ttl:"12062014", ket:"LULUS"},
-            {nama:"Hasna Ameliya Farras Wati", nisn:"3133508790", tempat:"Kebumen", ttl:"21072013", ket:"LULUS"},
-            {nama:"Hasna Diyana Hamidah", nisn:"0138416853", tempat:"Kebumen", ttl:"18102013", ket:"LULUS"},
-            {nama:"Hasna Umy Mahfudoh", nisn:"0132288255", tempat:"Kebumen", ttl:"30092013", ket:"LULUS"},
-            {nama:"Jidan Nabil Adiyatma", nisn:"0131539999", tempat:"Kebumen", ttl:"15062013", ket:"LULUS"},
-            {nama:"Jihan Muthia Naila", nisn:"3132614997", tempat:"Kebumen", ttl:"01052013", ket:"LULUS"},
-            {nama:"Kalingga Murdaning Akrami", nisn:"0135990316", tempat:"Kebumen", ttl:"15062013", ket:"LULUS"},
-            {nama:"Muhamad Dhofri Kamali", nisn:"3134154058", tempat:"Jakarta", ttl:"07032013", ket:"LULUS"},
-            {nama:"Muhamad Rifqi Maulana", nisn:"0141116979", tempat:"Kebumen", ttl:"06032014", ket:"LULUS"},
-            {nama:"Muhamball Fadhil Muzaki", nisn:"3145353811", tempat:"Banyumas", ttl:"30052014", ket:"LULUS"},
-            {nama:"Muhammad Farrel Setya Ramadhani", nisn:"3131080748", tempat:"Kebumen", ttl:"30072013", ket:"LULUS"},
-            {nama:"Muhammad Kafa Ramadhan", nisn:"0141435276", tempat:"Kebumen", ttl:"25072014", ket:"LULUS"},
-            {nama:"Mukhamad Rafa", nisn:"3120763254", tempat:"Kebumen", ttl:"04122012", ket:"LULUS"},
-            {nama:"Nur Laelatul Fajriah", nisn:"3137767091", tempat:"Banjarnegara", ttl:"03072013", ket:"LULUS"},
-            {nama:"Wulan Suci Ramadhan", nisn:"3138392336", tempat:"Kebumen", ttl:"07082013", ket:"LULUS"},
-            {nama:"Yaomy Fardana", nisn:"0134717575", tempat:"Kebumen", ttl:"13072013", ket:"LULUS"},
-            {nama:"Adelia Rahmawati", nisn:"0115774289", tempat:"Kebumen", ttl:"24012014", ket:"LULUS"},
-            {nama:"Adinda Aulia Putri", nisn:"0114315385", tempat:"Kebumen", ttl:"07032014", ket:"LULUS"},
-            {nama:"Agnes Riyani Fatimah Azzahra", nisn:"0118777584", tempat:"Kebumen", ttl:"19062014", ket:"LULUS"},
-            {nama:"Alfia Dianing Zulfah Rahmadhani", nisn:"0112502295", tempat:"Kebumen", ttl:"10072014", ket:"LULUS"},
-            {nama:"Alifa Aqila Zahra", nisn:"3124599304", tempat:"Kebumen", ttl:"04102013", ket:"LULUS"},
-            {nama:"Amri Adil Dermawan", nisn:"3124643905", tempat:"Kebumen", ttl:"23052014", ket:"LULUS"},
-            {nama:"Andika Kasya Pranuli", nisn:"3128267073", tempat:"Kebumen", ttl:"23022014", ket:"LULUS"},
-            {nama:"Ayduha Huwaida", nisn:"3128779281", tempat:"Kebumen", ttl:"20042014", ket:"LULUS"},
-            {nama:"Faaizah Risky Irfania", nisn:"0117820055", tempat:"Kebumen", ttl:"24032014", ket:"LULUS"},
-            {nama:"Giyan Raditya Ardani", nisn:"0094420524", tempat:"Kebumen", ttl:"13032014", ket:"LULUS"},
-            {nama:"Lia Rahmawati", nisn:"0111288474", tempat:"Kebumen", ttl:"06062012", ket:"LULUS"},
-            {nama:"Lubadah Mabruroh", nisn:"0111288474", tempat:"Kebumen", ttl:"28012013", ket:"LULUS"},
-            {nama:"Maulina Nur Hidayah", nisn:"3121384003", tempat:"Cilacap", ttl:"18012014", ket:"LULUS"},
-            {nama:"Mohamad Rasya Zaenuri", nisn:"3117108843", tempat:"Kebumen", ttl:"16102013", ket:"LULUS"},
-            {nama:"Mudrik Kamala", nisn:"0127893512", tempat:"Kebumen", ttl:"28122013", ket:"LULUS"},
-            {nama:"Muftikhatul Laila", nisn:"3112216099", tempat:"Kebumen", ttl:"13102014", ket:"LULUS"},
-            {nama:"Musa Ikhsanudin Mubarok", nisn:"3132461318", tempat:"Kebumen", ttl:"28122013", ket:"LULUS"},
-            {nama:"Naila Sofia", nisn:"3113304523", tempat:"Kebumen", ttl:"04052014", ket:"LULUS"},
-            {nama:"Qaila Adelia Putri", nisn:"3118237400", tempat:"Kebumen", ttl:"28032014", ket:"LULUS"},
-            {nama:"Rajaswa Arka Nufail", nisn:"3113334301", tempat:"Kebumen", ttl:"04112013", ket:"LULUS"},
-            {nama:"Resqi Nurwahid", nisn:"3137631846", tempat:"Kebumen", ttl:"28112013", ket:"LULUS"},
-            {nama:"Vicky Nabila Azzahra", nisn:"0135885451", tempat:"Kebumen", ttl:"20052013", ket:"LULUS"}
-        ];
+        // 2. Ganti array manual dengan variabel kosong
+    let students = [];
+    let currentStudent = null;
 
-        let currentStudent = null;
+    // 3. Fungsi untuk mengambil data Excel dari URL (GitHub/Server)
+    async function loadDataExcel() {
+        const url = "aset/data/data_siswa.xlsx"; // GANTI DENGAN URL EXCEL ANDA
+        try {
+            const response = await fetch(url);
+            const arrayBuffer = await response.arrayBuffer();
+            const data = new Uint8Array(arrayBuffer);
+            const workbook = XLSX.read(data, { type: 'array' });
+            
+            // Ambil sheet pertama
+            const firstSheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[firstSheetName];
+            
+            // Konversi ke JSON dan simpan ke variabel students
+            students = XLSX.utils.sheet_to_json(worksheet);
+            console.log("Data berhasil dimuat:", students.length, "siswa");
+        } catch (error) {
+            console.error("Gagal memuat file Excel:", error);
+            document.getElementById('error-msg').innerText = "Gagal memuat database siswa. Periksa koneksi internet.";
+            document.getElementById('error-msg').classList.remove('hidden');
+        }
+    }
+
+    // Jalankan fungsi saat halaman dibuka
+    window.onload = loadDataExcel;
 
         function login() {
-            const n = document.getElementById('nisn').value.trim();
-            const p = document.getElementById('pw').value.trim();
-            const errorDiv = document.getElementById('error-msg');
-            
-            // Sembunyikan error sebelumnya
-            errorDiv.classList.add('hidden');
+        const n = document.getElementById('nisn').value.trim();
+        const p = document.getElementById('pw').value.trim();
+        const errorDiv = document.getElementById('error-msg');
+        
+        errorDiv.classList.add('hidden');
 
-            // Case 1: Keduanya kosong
-            if (!n && !p) {
-                errorDiv.innerText = "Masukkan NISN dan Tanggal Lahir!";
-                errorDiv.classList.remove('hidden');
-                return;
-            }
-            // Case 2: NISN ada, Tanggal Lahir kosong
-            if (n && !p) {
-                errorDiv.innerText = "Masukkan Tanggal Lahir!";
-                errorDiv.classList.remove('hidden');
-                return;
-            }
-            // Case 3: Tanggal Lahir ada, NISN kosong
-            if (!n && p) {
-                errorDiv.innerText = "Masukkan NISN!";
-                errorDiv.classList.remove('hidden');
-                return;
-            }
-
-            // Proses pencarian data
-            const s = students.find(x => x.nisn === n && x.ttl === p);
-
-            // Case 4: Data tidak ditemukan
-            if (!s) {
-                errorDiv.innerText = "Data tidak ditemukan!";
-                errorDiv.classList.remove('hidden');
-                return;
-            }
-
-            // Jika lolos semua validasi
-            currentStudent = s;
-            const urutanSiswa = students.findIndex(x => x.nisn === n);
-            const noSurat = `${198 + urutanSiswa}/MI.059/Kur.02/06/2026`;
-
-            document.getElementById('nomorSurat').innerText = noSurat;
-            document.getElementById('namaCetak').innerText = s.nama;
-            document.getElementById('nisnCetak').innerText = s.nisn;
-            document.getElementById('ttlCetak').innerText = `${s.tempat}, ${formatTgl(s.ttl)}`;
-            document.getElementById('statusCetak').innerText = s.ket;
-            document.getElementById('hasil').classList.remove('hidden');
+        // Validasi input kosong
+        if (!n && !p) {
+            errorDiv.innerText = "Masukkan NISN dan Tanggal Lahir!";
+            errorDiv.classList.remove('hidden');
+            return;
+        }
+        if (n && !p) {
+            errorDiv.innerText = "Masukkan Tanggal Lahir!";
+            errorDiv.classList.remove('hidden');
+            return;
+        }
+        if (!n && p) {
+            errorDiv.innerText = "Masukkan NISN!";
+            errorDiv.classList.remove('hidden');
+            return;
         }
 
-        // Fungsi Tambahan: Deteksi tombol Enter pada input NISN dan Password
-        document.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                login();
-            }
-        });
+        // Cari data di variabel students yang sudah terisi dari Excel
+        // Pastikan kolom di Excel bernama 'nisn' dan 'ttl' (case sensitive)
+        const s = students.find(x => String(x.nisn) === n && String(x.ttl) === p);
+
+        if (!s) {
+            errorDiv.innerText = "Data tidak ditemukan!";
+            errorDiv.classList.remove('hidden');
+            return;
+        }
+
+        currentStudent = s;
+        // Gunakan nomor urut berdasarkan file Excel
+        const urutanSiswa = students.findIndex(x => String(x.nisn) === n);
+        const noSurat = `${198 + urutanSiswa}/MI.059/Kur.02/06/2026`;
+
+        document.getElementById('nomorSurat').innerText = noSurat;
+        document.getElementById('namaCetak').innerText = s.nama;
+        document.getElementById('nisnCetak').innerText = s.nisn;
+        document.getElementById('ttlCetak').innerText = `${s.tempat}, ${formatTgl(String(s.ttl))}`;
+        document.getElementById('statusCetak').innerText = s.ket;
+        document.getElementById('hasil').classList.remove('hidden');
+    }
+
+    // Fungsi Enter, formatTgl, dll tetap sama
+    document.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') login();
+    });
 
         function unduhPDF() {
 			if (currentStudent) {
