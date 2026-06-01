@@ -307,15 +307,40 @@
             const n = document.getElementById('nisn').value.trim();
             const p = document.getElementById('pw').value.trim();
             const errorDiv = document.getElementById('error-msg');
+            
+            // Sembunyikan error sebelumnya
             errorDiv.classList.add('hidden');
 
+            // Case 1: Keduanya kosong
+            if (!n && !p) {
+                errorDiv.innerText = "Masukkan NISN dan Tanggal Lahir!";
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+            // Case 2: NISN ada, Tanggal Lahir kosong
+            if (n && !p) {
+                errorDiv.innerText = "Masukkan Tanggal Lahir!";
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+            // Case 3: Tanggal Lahir ada, NISN kosong
+            if (!n && p) {
+                errorDiv.innerText = "Masukkan NISN!";
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            // Proses pencarian data
             const s = students.find(x => x.nisn === n && x.ttl === p);
+
+            // Case 4: Data tidak ditemukan
             if (!s) {
                 errorDiv.innerText = "Data tidak ditemukan!";
                 errorDiv.classList.remove('hidden');
                 return;
             }
 
+            // Jika lolos semua validasi
             currentStudent = s;
             const urutanSiswa = students.findIndex(x => x.nisn === n);
             const noSurat = `${198 + urutanSiswa}/MI.059/Kur.02/06/2026`;
@@ -327,6 +352,13 @@
             document.getElementById('statusCetak').innerText = s.ket;
             document.getElementById('hasil').classList.remove('hidden');
         }
+
+        // Fungsi Tambahan: Deteksi tombol Enter pada input NISN dan Password
+        document.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                login();
+            }
+        });
 
         function unduhPDF() {
 			if (currentStudent) {
